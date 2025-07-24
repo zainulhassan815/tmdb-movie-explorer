@@ -50,6 +50,7 @@ export default function Search() {
           <Input
             className="rounded-full"
             type="text"
+            name="search"
             placeholder="Search..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}

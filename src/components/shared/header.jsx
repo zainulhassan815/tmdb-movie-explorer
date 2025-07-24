@@ -1,6 +1,8 @@
-import { Clapperboard, Search } from "lucide-react";
+import { Clapperboard, Home, Search } from "lucide-react";
 import { NavLink } from "react-router";
+import { LoginDialog } from "@/components/login/login-dialog";
 import { ThemeModeToggle } from "@/components/shared/theme-toggle";
+import { UserMenu } from "@/components/shared/user-menu";
 
 export const Header = () => {
   const getNavLinkClass = ({ isActive }) =>
@@ -17,13 +19,24 @@ export const Header = () => {
         </NavLink>
         <nav className="flex items-center gap-4 me-4">
           <NavLink to="/" className={getNavLinkClass} end>
+            <Home className="w-4 h-4" />
             Home
           </NavLink>
           <NavLink to="/search" className={getNavLinkClass}>
             <Search className="w-4 h-4" /> Search
           </NavLink>
         </nav>
-        <ThemeModeToggle />
+        <div className="flex items-center gap-4">
+          <ThemeModeToggle />
+          <LoginDialog />
+          <UserMenu
+            user={{
+              name: "Zain Ul Hassan",
+              email: "zain@mail.com",
+              avatar: "",
+            }}
+          />
+        </div>
       </div>
     </header>
   );

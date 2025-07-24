@@ -138,3 +138,22 @@ export const getMovieById = async (id) => {
     genres: response.data.genres.map((genre) => genre.name),
   };
 };
+
+export const generateRequestToken = async () => {
+  const response = await axiosClient.get("/authentication/token/new");
+  return response.data.request_token;
+};
+
+export const generateSessionId = async (requestToken) => {
+  const response = await axiosClient.post("/authentication/session/new", {
+    request_token: requestToken,
+  });
+  return response.data.session_id;
+};
+
+export const getAccountDetails = async (sessionId) => {
+  const response = await axiosClient.get("/account", {
+    params: { session_id: sessionId },
+  });
+  return response.data;
+};
