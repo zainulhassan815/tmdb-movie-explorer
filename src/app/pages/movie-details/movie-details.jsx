@@ -1,4 +1,5 @@
 import { useQueries } from "@tanstack/react-query";
+import { Head } from "@unhead/react";
 import { Star } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router";
 import { getMovieById, getRecommendationsByMovieId, getReviewsByMovieId } from "@/api/tmdb";
@@ -69,6 +70,26 @@ export default function MovieDetails() {
   if (movie) {
     return (
       <>
+        <Head>
+          <title>{movie.title} | MovieExplorer</title>
+          <meta name="description" content={movie.overview} />
+          <meta property="og:title" content={movie.title} />
+          <meta property="og:description" content={movie.overview} />
+          <meta
+            property="og:image"
+            content={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+          />
+          <meta property="og:url" content={window.location.href} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={movie.title} />
+          <meta name="twitter:description" content={movie.overview} />
+          <meta
+            name="twitter:image"
+            content={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+          />
+          <meta name="twitter:url" content={window.location.href} />
+        </Head>
+
         {/* Hero Section */}
         <MovieDetailsHeroSection movie={movie} onPlayClick={null} onAddToWatchlistClick={null} />
 
@@ -81,33 +102,43 @@ export default function MovieDetails() {
             </TabsList>
             <TabsContent value="reviews">
               <h1 className="text-3xl font-bold tracking-tight mb-4">Reviews</h1>
-              <div className="flex flex-col gap-4">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {reviews?.map((review) => (
-                  <Card key={review.id} className="bg-white/10 backdrop-blur-sm border-white/20">
-                    <CardContent className="p-6">
+                  <Card
+                    key={review.id}
+                    className="bg-accent/75 backdrop-blur-sm border-2 border-accent p-0"
+                  >
+                    <CardContent className="p-4">
                       <div className="flex items-start gap-4 mb-4">
                         <Avatar>
-                          <AvatarImage src={``} alt={review.author} />
+                          <AvatarImage
+                            src={`https://image.tmdb.org/t/p/w500${review.author_details.avatar_path}`}
+                            alt={review.author}
+                          />
                           <AvatarFallback>{review.author}</AvatarFallback>
                         </Avatar>
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-semibold text-white">{review.author}</h3>
+                            <h3 className="font-semibold text-accent-foreground">
+                              {review.author}
+                            </h3>
                             {review.author_details.rating && (
                               <div className="flex items-center gap-1">
                                 <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                                <span className="text-white text-sm">
+                                <span className="text-sm text-accent-foreground">
                                   {review.author_details.rating}/10
                                 </span>
                               </div>
                             )}
                           </div>
-                          <p className="text-white/70 text-sm">
+                          <p className="text-accent-foreground/70 text-sm">
                             {new Date(review.created_at).toLocaleDateString()}
                           </p>
                         </div>
                       </div>
-                      <p className="text-white leading-relaxed line-clamp-5">{review.content}</p>
+                      <p className="text-accent-foreground leading-relaxed line-clamp-5">
+                        {review.content}
+                      </p>
                     </CardContent>
                   </Card>
                 ))}

@@ -19,7 +19,7 @@ export default function Movies() {
   return (
     <>
       <Head>
-        <title>Explore Movies | Page: {page}</title>
+        <title>Movie Explorer</title>
       </Head>
       <div className="pt-6 pb-22 px-4 md:px-6 relative">
         {data && (

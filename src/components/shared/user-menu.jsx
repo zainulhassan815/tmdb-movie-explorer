@@ -23,9 +23,16 @@ export const UserMenu = ({
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={user.avatar} alt={user.name} />
+            <AvatarImage
+              src={
+                user.avatar?.tmdb?.avatar_path
+                  ? `https://image.tmdb.org/t/p/original${user.avatar.tmdb.avatar_path}`
+                  : `https://0.gravatar.com/avatar/${user.avatar?.gravatar?.hash}`
+              }
+              alt={user.name}
+            />
             <AvatarFallback className="bg-secondary text-secondary-foreground">
-              {user.name
+              {(user.name || user.username)
                 .split(" ")
                 .slice(0, 2)
                 .map((n) => n[0])
@@ -37,7 +44,7 @@ export const UserMenu = ({
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="flex flex-col gap-2">
           <p className="text-sm font-medium leading-none">{user.name}</p>
-          <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+          <p className="text-xs leading-none text-muted-foreground">@{user.username}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={onFavoritesClick}>

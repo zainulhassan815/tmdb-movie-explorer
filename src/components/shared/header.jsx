@@ -3,12 +3,15 @@ import { NavLink } from "react-router";
 import { LoginDialog } from "@/components/login/login-dialog";
 import { ThemeModeToggle } from "@/components/shared/theme-toggle";
 import { UserMenu } from "@/components/shared/user-menu";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Header = () => {
   const getNavLinkClass = ({ isActive }) =>
     `flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
       isActive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent"
     }`;
+
+  const { sessionId, user, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -28,14 +31,8 @@ export const Header = () => {
         </nav>
         <div className="flex items-center gap-4">
           <ThemeModeToggle />
-          <LoginDialog />
-          <UserMenu
-            user={{
-              name: "Zain Ul Hassan",
-              email: "zain@mail.com",
-              avatar: "",
-            }}
-          />
+          {!sessionId && <LoginDialog />}
+          {user && <UserMenu user={user} onLogoutClick={logout} />}
         </div>
       </div>
     </header>

@@ -1,7 +1,7 @@
 import { ExternalLink, Loader2Icon } from "lucide-react";
 import { useState } from "react";
 import { generateRequestToken } from "@/api/tmdb";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -29,9 +29,7 @@ export function LoginDialog() {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button type="button">Login</Button>
-      </DialogTrigger>
+      <DialogTrigger className={buttonVariants({ variant: "default" })}>Login</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Welcome to MovieExplorer</DialogTitle>

@@ -5,13 +5,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const MovieCard = ({ movie }) => {
   return (
-    <Card className="max-h-[280px] p-0 group cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
-      <div className="flex h-full">
+    <Card className="h-[280px] p-0 group cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-lg">
+      <div className="flex overflow-hidden">
         <div className="relative overflow-hidden rounded-l-lg flex-shrink-0">
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
-            className="w-[150px] lg:w-[200px] h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            className="w-[150px] lg:w-[200px] h-full object-cover transition-transform duration-300 group-hover:scale-110 origin-center"
           />
           <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
             <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />

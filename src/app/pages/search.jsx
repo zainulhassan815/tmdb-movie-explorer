@@ -17,7 +17,7 @@ export default function Search() {
 
   const { data, isLoading, isError, isPlaceholderData, refetch } = useQuery({
     queryKey: ["search", "query", debouncedQuery, "page", page],
-    queryFn: ({ signal }) => searchMovies(debouncedQuery, page, { signal }),
+    queryFn: (ctx) => searchMovies(debouncedQuery, page, { signal: ctx.signal }),
     placeholderData: keepPreviousData,
     enabled: !!debouncedQuery,
   });
@@ -25,9 +25,7 @@ export default function Search() {
   return (
     <>
       <Head>
-        <title>
-          Search Movies | Query: {debouncedQuery} | Page {page}
-        </title>
+        <title>Search Movies</title>
       </Head>
       <div className="pt-6 pb-22 px-4 md:px-6 relative">
         {data && (

@@ -1,5 +1,15 @@
 import { axiosClient } from "@/config/axios-client";
 
+export async function apiRequest(url, config = {}) {
+  const response = await axiosClient.request({
+    url,
+    method: "GET",
+    ...config,
+  });
+
+  return response.data;
+}
+
 export const genres = [
   {
     id: 28,
@@ -93,67 +103,95 @@ const formatResponseData = (data) => {
   };
 };
 
-export const discoverMovies = async (page = 1) => {
-  const response = await axiosClient.get(
-    "/discover/movie?include_video=false&language=en-US&sort_by=popularity.desc",
-    {
-      params: {
-        page,
-      },
+export const discoverMovies = async (page = 1, options = {}) => {
+  const data = await apiRequest("/discover/movie", {
+    params: {
+      include_video: false,
+      language: "en-US",
+      sort_by: "popularity.desc",
+      page,
     },
-  );
+    ...options,
+  });
 
-  return formatResponseData(response.data);
+  return formatResponseData(data);
 };
 
-export const searchMovies = async (query, page = 1, { signal }) => {
-  const response = await axiosClient.get("/search/movie?include_video=false&language=en-US", {
+export const searchMovies = async (query, page = 1, options = {}) => {
+  const data = await apiRequest("/search/movie", {
     params: {
+      include_video: false,
+      language: "en-US",
       query,
       page,
     },
-    signal: signal ?? undefined,
+    ...options,
   });
 
-  return formatResponseData(response.data);
+  return formatResponseData(data);
 };
 
-export const getRecommendationsByMovieId = async (movieId) => {
-  const response = await axiosClient.get(
-    `/movie/${movieId}/recommendations?include_video=false&language=en-US`,
-  );
+export const getRecommendationsByMovieId = async (movieId, options = {}) => {
+  const data = await apiRequest(`/movie/${movieId}/recommendations`, {
+    params: {
+      include_video: false,
+      language: "en-US",
+    },
+    ...options,
+  });
 
-  return formatResponseData(response.data).results;
+  return formatResponseData(data).results;
 };
 
-export const getReviewsByMovieId = async (movieId) => {
-  const response = await axiosClient.get(`/movie/${movieId}/reviews?language=en-US`);
-  return response.data.results;
+export const getReviewsByMovieId = async (movieId, options = {}) => {
+  const data = await apiRequest(`/movie/${movieId}/reviews`, {
+    params: {
+      language: "en-US",
+    },
+    ...options,
+  });
+
+  return data.results;
 };
 
-export const getMovieById = async (id) => {
-  const response = await axiosClient.get(`/movie/${id}`);
+export const getMovieById = async (id, options = {}) => {
+  const data = await apiRequest(`/movie/${id}`, {
+    ...options,
+  });
+
   return {
-    ...response.data,
-    genres: response.data.genres.map((genre) => genre.name),
+    ...data,
+    genres: data.genres.map((genre) => genre.name),
   };
 };
 
-export const generateRequestToken = async () => {
-  const response = await axiosClient.get("/authentication/token/new");
-  return response.data.request_token;
+export const generateRequestToken = async (options = {}) => {
+  const data = await apiRequest("/authentication/token/new", {
+    ...options,
+  });
+
+  return data.request_token;
 };
 
-export const generateSessionId = async (requestToken) => {
-  const response = await axiosClient.post("/authentication/session/new", {
-    request_token: requestToken,
+export const generateSessionId = async (requestToken, options = {}) => {
+  const data = await apiRequest("/authentication/session/new", {
+    method: "POST",
+    data: {
+      request_token: requestToken,
+    },
+    ...options,
   });
-  return response.data.session_id;
+
+  return data.session_id;
 };
 
-export const getAccountDetails = async (sessionId) => {
-  const response = await axiosClient.get("/account", {
-    params: { session_id: sessionId },
+export const getAccountDetails = async (sessionId, options = {}) => {
+  const data = await apiRequest("/account", {
+    params: {
+      session_id: sessionId,
+    },
+    ...options,
   });
-  return response.data;
+
+  return data;
 };
