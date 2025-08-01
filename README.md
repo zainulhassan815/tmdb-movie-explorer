@@ -101,6 +101,20 @@ src
 └── main.jsx          # App entry point
 ```
 
+## Screenshots
+
+### Light Mode
+
+| Login Dialog | Movie Details | Search Results |
+| :---: | :---: | :---: |
+| <img src="docs/images/login_dialog.png" alt="Login Dialog" width="300"> | <img src="docs/images/movie_details.png" alt="Movie Details" width="300"> | <img src="docs/images/home.png" alt="Home Page" width="300"> |
+
+### Dark Mode
+
+| Home Page | Login Dialog | Login Success | Movie Details | Search Results |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="docs/images/home_dark.png" alt="Home Page" width="300"> | <img src="docs/images/login_dialog_dark.png" alt="Login Dialog" width="300"> | <img src="docs/images/login_success_dark.png" alt="Login Success" width="300"> | <img src="docs/images/movie_details_dark.png" alt="Movie Details" width="300"> | <img src="docs/images/search_dark.png" alt="Search Results" width="300"> |
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for
