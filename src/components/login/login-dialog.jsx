@@ -19,7 +19,7 @@ export function LoginDialog() {
     try {
       setIsLoading(true);
       const token = await generateRequestToken();
-      const redirectTo = encodeURIComponent("http://localhost:5173/callback");
+      const redirectTo = encodeURIComponent(`${window.location.origin}/callback`);
       window.location.href = `https://www.themoviedb.org/authenticate/${token}?redirect_to=${redirectTo}`;
     } catch (err) {
       console.error("Login failed", err);
